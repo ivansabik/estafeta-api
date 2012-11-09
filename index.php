@@ -16,17 +16,19 @@ $data = array(
 	  "dispatch" => 'doRastreoInternet'
 	  );
 
-if(isset($_GET['numero']) && valida('guia')) {
+//if(!$_GET['numero'])
+//	responde();
+
+if(valida('guia')) {
  	$data['guias'] = $_GET['numero'];
 	$data['tipoGuia'] = 'ESTAFETA';
-		
 }
-else if(isset($_GET['numero']) && valida('rastreo')){
+if(valida('rastreo')){
 	$data['guias'] = $_GET['numero'];
 	$data['tipoGuia'] = 'REFERENCE';
 }
 else {
-	responde();
+	responde(); // parámetro no válido
 }
 
 curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
