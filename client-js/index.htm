@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Estafeta API</title>
+        <link href="estilo.css" rel="stylesheet" type="text/css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <script src="jquery.gmap.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $("#divRespuesta").hide();
+                $("#button").click(function() {
+                    $.ajax({
+                        url: "http://localhost/EstafetaAPI/server-php?numero="+$("#textfield").val(),
+                        dataType: 'json',
+                        success: function(json) {
+                            $("#divRespuesta").show();
+							
+                            if(json["error"]) {
+                                $("#divRespuesta").html('<span class="error">'+json['mensaje_error']+'</span>');
+                            }
+                            else {
+                                $("#divRespuesta").empty();
+                                $("#divRespuesta").append('<h2>'+json['origen']['nombre']+' - '+json['destino']['nombre']+'</h2>');
+                                $("#divRespuesta").append('<p>Numero de guia: '+json['numero_guia']+'</p>');
+                                $("#divRespuesta").append('<p>Codigo de rastreo: '+json['codigo_rastreo']+'</p>');
+                                $("#divRespuesta").append('<p>Fecha programada de entrega: '+json['fecha_programada']+'</p>');
+                                $("#divRespuesta").append('<p>Fecha de recoleccion: '+json['fecha_recoleccion']+'</p>');
+                                $("#divRespuesta").append('<p>Estado de envio: '+json['estatus_envio']+'</p>');
+                                $("#mapa").gMap({
+                                    latitude: 19.42705,
+                                    longitude: -99.127571,
+                                    zoom: 4,
+                                    markers: [
+                                        { latitude: json['origen']['latitud'], longitude: json['origen']['longitud'], html: "Origen: "+json['origen']['nombre'] },
+                                        { latitude: json['destino']['latitud'], longitude: json['destino']['longitud'], html: "Destino: "+json['destino']['nombre'] }
+                                    ]
+                                });
+                            };
+                        }
+                    })
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+        <p>Localizador de envíos</p>
+        <p>Número de guía / Código de rastreo:&nbsp;
+            <label>
+                <input name="textfield" type="text" id="textfield" size="22" maxlength="22" />
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="button" name="button" id="button" value="Buscar" />
+            </label>
+        </p>
+        <div class="cuadro" id="divRespuesta"></div>
+        <br/>
+        <div class="mapa" id="mapa"></div>
+    </body>
+</html>

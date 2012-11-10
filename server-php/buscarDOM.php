@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 include_once 'simple_html_dom.php';
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, "http://rastreo3.estafeta.com/RastreoWebInternet/consultaEnvio.do");
@@ -9,7 +9,7 @@ $data = array(
   "idioma" => 'es',
   "dispatch" => 'doRastreoInternet',
   "tipoGuia" => 'REFERENCE',
-  "guias" => '1527923911'
+  "guias" => '1872996867'
 );
 
 curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
@@ -20,7 +20,7 @@ $html = new simple_html_dom();
 $html->load($output);
 
 $i = 0;
-$searchKey = "div span text";
+$searchKey = "div text";
 foreach($html->find($searchKey) as $txt) {
 	echo($i."&nbsp;<p>".$html->find($searchKey, $i)."</p>");
 	$i++;
