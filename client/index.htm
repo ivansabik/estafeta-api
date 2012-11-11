@@ -2,16 +2,17 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Estafeta API</title>
+        <title>Rastreador Estafeta: Rastrea tus envíos con un clic</title>
         <link href="estilo.css" rel="stylesheet" type="text/css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
         <script src="jquery.gmap.min.js"></script>
         <script src="purl.js"></script>
         <script>
-            $(document).ready(function() {
-                $("#divRespuesta").hide();
-                
+            URL_API = "http://localhost/EstafetaAPI/api";
+            URL_CLIENTE = "http://localhost/EstafetaAPI/client";
+            
+            $(document).ready(function() {               
                 if($.url().param('numero') != undefined) {
                     $("#textfield").val($.url().param('numero'));
                     dispatch($.url().param('numero'));
@@ -23,30 +24,35 @@
             });
             
             function dispatch(numero) {
+                $("#divRespuesta").removeClass("cuadro");
+                $("#mapa").removeClass("mapa");
                 $("#divRespuesta").hide();
                 $("#mapa").hide();
+                
                 $('#cargando').append('<div class="cargando"></div>');
                 $('#button').attr("disabled", true);
                 $.ajax({
-                    url: "http://localhost/EstafetaAPI/api?numero="+numero,
+                    url: URL_API+"?numero="+numero,
                     dataType: 'json',
                     success: function(json) {
                         $('#cargando').empty();
                         $('#button').attr("disabled", false);
+                        $("#divRespuesta").addClass("cuadro");
                         $("#divRespuesta").show();
-                        $("#mapa").show();
                         if(json["error"]) {
                             $("#divRespuesta").html('<span class="error">'+json['mensaje_error']+'</span>');
-                            $("#mapa").hide();
                         }
                         else {
+                            $("#mapa").addClass("mapa");
+                            $("#mapa").show();
                             $("#divRespuesta").empty();
                             $("#divRespuesta").append('<h2>'+json['origen']['nombre']+' - '+json['destino']['nombre']+'</h2>');
-                            $("#divRespuesta").append('<p>Numero de guia: '+json['numero_guia']+'</p>');
-                            $("#divRespuesta").append('<p>Codigo de rastreo: '+json['codigo_rastreo']+'</p>');
-                            $("#divRespuesta").append('<p>Fecha programada de entrega: '+json['fecha_programada']+'</p>');
-                            $("#divRespuesta").append('<p>Fecha de recoleccion: '+json['fecha_recoleccion']+'</p>');
-                            $("#divRespuesta").append('<p>Estado de envio: '+json['estatus_envio']+'</p>');
+                            $("#divRespuesta").append('Número de guia: '+json['numero_guia']+'</br>');
+                            $("#divRespuesta").append('Código de rastreo: '+json['codigo_rastreo']+'</br>');
+                            $("#divRespuesta").append('Fecha programada de entrega: '+json['fecha_programada']+'</br>');
+                            $("#divRespuesta").append('Fecha de recolección '+json['fecha_recoleccion']+'</br>');
+                            $("#divRespuesta").append('Estado de envío: '+json['estatus_envio']+'</br>');
+                            $("#divRespuesta").append('Link para rastreo: <a href="'+URL_CLIENTE+'?numero='+numero+'">'+URL_CLIENTE+'?numero='+json['codigo_rastreo']+'</a>');
                             $("#mapa").gMap({
                                 latitude: 19.42705,
                                 longitude: -99.127571,
@@ -64,20 +70,43 @@
     </head>
 
     <body>
-        <p>Rastrea fácilmente envíos de Estafeta</p>
-        <p>Número de guía / Código de rastreo:&nbsp;
-            <label>
-                <input name="textfield" type="text" id="textfield" size="22" maxlength="22" />
+        <div id="fb-root"></div>
+        <script>
+            window.fbAsyncInit = function() {
+                // init the FB JS SDK
+                FB.init({
+                    appId      : '382228845187628',
+                    cookie     : true,
+                    xfbml      : true
+                });
+            };
+
+            // Load the SDK's source Asynchronously
+            (function(d, debug){
+                var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement('script'); js.id = id; js.async = true;
+                js.src = "//connect.facebook.net/en_US/all" + (debug ? "/debug" : "") + ".js";
+                ref.parentNode.insertBefore(js, ref);
+            }(document, /*debug*/ false));
+        </script>
+        <div class="logo"></div>
+        <p>
+            <label id="info">
+                <input name="textfield" type="text" id="textfield" value="Guía / Código de rastreo" />
             </label>
         </p>
         <p>
             <label>
-                <input type="button" name="button" id="button" value="Buscar" />
+                <input type="button" name="button" id="button" value="Rastrear" />
             </label>
         </p>
+        <div class="fb-like" data-href="http://localhost/EstafetaAPI/client/" data-send="true" data-width="450" data-show-faces="true"></div>
         <div id="cargando"></div>
-        <div class="cuadro" id="divRespuesta"></div>
+        <div id="divRespuesta"></div>
         <br/>
-        <div class="mapa" id="mapa"></div>
+        <div id="mapa"></div>
+        <div class="fb-comments" data-href="http://localhost/EstafetaAPI/client/" data-num-posts="5" data-width="470"></div>
+        <a href="https://github.com/ivanrodriguez/estafeta-api"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
     </body>
 </html>
