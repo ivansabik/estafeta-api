@@ -9,8 +9,8 @@
         <script src="jquery.gmap.min.js"></script>
         <script src="purl.js"></script>
         <script>
-            URL_API = "http://localhost/EstafetaAPI/api";
-            URL_CLIENTE = "http://localhost/EstafetaAPI/client";
+            URL_API = "http://localhost/estafeta-api/api";
+            URL_CLIENTE = "http://localhost/estafeta-api/client";
             
             $(document).ready(function() {               
                 if($.url().param('numero') != undefined) {
@@ -46,7 +46,8 @@
                             $("#mapa").addClass("mapa");
                             $("#mapa").show();
                             $("#divRespuesta").empty();
-                            $("#divRespuesta").append('<h2>'+json['origen']['nombre']+' - '+json['destino']['nombre']+'</h2>');
+							if(json['origen']['nombre']!= "" && json['destino']['nombre'] != "")
+								$("#divRespuesta").append('<h2>'+json['origen']['nombre']+' - '+json['destino']['nombre']+'</h2>');
                             $("#divRespuesta").append('Número de guia: '+json['numero_guia']+'</br>');
                             $("#divRespuesta").append('Código de rastreo: '+json['codigo_rastreo']+'</br>');
                             $("#divRespuesta").append('Fecha programada de entrega: '+json['fecha_programada']+'</br>');

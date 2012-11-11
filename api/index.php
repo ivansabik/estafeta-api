@@ -1,6 +1,6 @@
 ﻿<?php
 // TODO: Historial del envio, trazar poligono en mapa e historial
-
+error_reporting(0);
 header('Content-Type: application/json; charset=utf-8');
 
 include_once 'simple_html_dom.php';
@@ -58,11 +58,21 @@ if ($html->find('div text', 10)->plaintext == "No hay informaci&oacute;n disponi
 
 // Busca coordenadas de origen y destino
 $coords = geocoder::getLocation(utf8_encode($html->find('div span text', 20)->plaintext) . ", Mexico");
-$latitudOrigen = $coords['lat'];
-$longitudOrigen = $coords['lng'];
+if($coords != false) {
+	$latitudOrigen = $coords['lat'];
+	$longitudOrigen = $coords['lng'];
+} else {
+	$latitudOrigen = "";
+	$longitudOrigen = "";
+}
 $coords = geocoder::getLocation(utf8_encode($html->find('div span text', 31)->plaintext) . ", Mexico");
-$latitudDestino = $coords['lat'];
-$longitudDestino = $coords['lng'];
+if($coords != false) {
+	$latitudDestino = $coords['lat'];
+	$longitudDestino = $coords['lng'];
+} else {
+	$latitudDestino = "";
+	$longitudDestino = "";
+}
 
 // Construye respuesta de guia/rastreo encontrado
 try {
@@ -88,6 +98,7 @@ try {
         "fecha_entrega" => substr($html->find('div span text', 48)->plaintext, 0, 10),
         "hora_entrega" => substr($html->find('div span text', 48)->plaintext, 11)
     );
+	$fields = limpiaRespuesta($fields);
     echo indent(json_encode($fields));
 } catch (Exception $e) {
     $fields = array(
