@@ -77,7 +77,7 @@ try {
             "longitud" => $longitudOrigen
         ),
         "fecha_recoleccion" => substr($html->find('div span text', 26)->plaintext, 0, 10),
-        "hora_recoleccion" => substr($html->find('div span text', 26)->plaintext, 10),
+        "hora_recoleccion" => substr($html->find('div span text', 26)->plaintext, 11),
         "destino" => array(
             "nombre" => utf8_encode($html->find('div span text', 31)->plaintext),
             "latitud" => $latitudDestino,
@@ -86,7 +86,7 @@ try {
         ),
         "estatus_envio" => utf8_encode($html->find('div span text', 42)->plaintext),
         "fecha_entrega" => substr($html->find('div span text', 48)->plaintext, 0, 10),
-        "hora_entrega" => substr($html->find('div span text', 48)->plaintext, 10)
+        "hora_entrega" => substr($html->find('div span text', 48)->plaintext, 11)
     );
     echo indent(json_encode($fields));
 } catch (Exception $e) {
