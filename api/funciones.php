@@ -22,33 +22,38 @@ function valida($tipo) {
 
 // Valida cada campo de la respuesta y reemplaza si está mal
 function limpiaRespuesta($respuesta) {
-	// numero de guia ya se validó
-	// codigo de rastreo ya se validó
-	// Tipo de servicio
-	
-	// Fecha programada de entrega, fecha de recoleccion, fecha de entrega
-	if(!preg_match('/^\d{1,2}\/\d{1,2}\/\d{4}$/', $respuesta["fecha_programada"]))
-		$respuesta["fecha_programada"] = "";
-	if(!preg_match('/^\d{1,2}\/\d{1,2}\/\d{4}$/', $respuesta["fecha_recoleccion"]))
-		$respuesta["fecha_recoleccion"] = "";
-	if(!preg_match('/^\d{1,2}\/\d{1,2}\/\d{4}$/', $respuesta["fecha_entrega"]))
-		$respuesta["fecha_entrega"] = "";
-	// Nombre origen, destino
-	if($respuesta["origen"]["latitud"] == "")
-		$respuesta["origen"]["nombre"] = "";
-	if($respuesta["destino"]["latitud"] == "")
-		$respuesta["destino"]["nombre"] = "";
-	// Coordenadas origen y destino ya se validaron
-	// codigo postal destino
-	if(!preg_match('/[0-9][0-9][0-9][0-9][0-9]/', $respuesta["destino"]["codigo_postal"]))
-		$respuesta["destino"]["codigo_postal"] = "";
-	// Hora de recolección, hora de entrega
-	if(!preg_match('/([01]?[0-9]|2[0-3]):[0-5][0-9]/', substr($respuesta["hora_recoleccion"],0, 4)))
-		$respuesta["hora_recoleccion"] = "";
-	if(!preg_match('/([01]?[0-9]|2[0-3]):[0-5][0-9]/', substr($respuesta["hora_entrega"],0, 4)))
-		$respuesta["hora_entrega"] = "";
-	// Estatus envio
-	return $respuesta;
+    // numero de guia ya se validó
+    // codigo de rastreo ya se validó
+    // Tipo de servicio
+
+    // Fecha programada de entrega, fecha de recoleccion, fecha de entrega
+    /*
+    if(!preg_match('/^\d{1,2}\/\d{1,2}\/\d{4}$/', $respuesta["fecha_programada"]))
+        $respuesta["fecha_programada"] = "";
+    if(!preg_match('/^\d{1,2}\/\d{1,2}\/\d{4}$/', $respuesta["fecha_recoleccion"]))
+        $respuesta["fecha_recoleccion"] = "";
+    if(!preg_match('/^\d{1,2}\/\d{1,2}\/\d{4}$/', $respuesta["fecha_entrega"]))
+        $respuesta["fecha_entrega"] = "";
+    */
+    // Nombre origen, destino
+    if($respuesta["origen"]["latitud"] == "")
+        $respuesta["origen"]["nombre"] = "";
+    if($respuesta["destino"]["latitud"] == "")
+        $respuesta["destino"]["nombre"] = "";
+    // Coordenadas origen y destino ya se validaron
+    // codigo postal destino
+    if(!preg_match('/[0-9][0-9][0-9][0-9][0-9]/', $respuesta["destino"]["codigo_postal"]))
+        $respuesta["destino"]["codigo_postal"] = "";
+    /*
+    DEPRECATED
+    // Hora de recolección, hora de entrega
+    if(!preg_match('/([01]?[0-9]|2[0-3]):[0-5][0-9]/', substr($respuesta["hora_recoleccion"],0, 4)))
+        $respuesta["hora_recoleccion"] = "";
+    if(!preg_match('/([01]?[0-9]|2[0-3]):[0-5][0-9]/', substr($respuesta["hora_entrega"],0, 4)))
+        $respuesta["hora_entrega"] = "";
+    */
+    // Estatus envio
+    return $respuesta;
 }
 
 ?>

@@ -1,6 +1,9 @@
 Estafeta API
 ----------------
 
+### Actualización 22.02.2014
+Ya funciona otra vez la API! Estafeta cambió un poco el diseño gráfico del sitio y con esto cambió el DOM. Era tan sencillo solucionarlo, pero había que hacerlo manualmente hasta que no funcione DOM Hunter (https://github.com/ivanrodriguez/dom-hunter).
+Un cambio muy importante también es que hora_recoleccion ya no existe y en cambio fecha_recoleccion contiene la fecha y hora.
 
 Sin relación alguna con Estafeta, es una API desarrollada con PHP que proporciona información relacionada con un envió en formato JSON. Para hacer esto hace una petición POST a la pagina de rastreo de Estafeta y parsea la pagina resultante para construir la información del paquete.
 

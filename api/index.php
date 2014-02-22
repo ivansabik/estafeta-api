@@ -48,7 +48,7 @@ $html = new simple_html_dom();
 $html->load($output);
 
 // No hay informacion disponible
-if ($html->find('div text', 10)->plaintext == "No hay informaci&oacute;n disponible.") {
+if ($html->find('text', 248)->plaintext == "No hay informaci&oacute;n disponible.") {
     $fields = array(
         "error" => 2,
         "mensaje_error" => "No hay información disponible",
@@ -57,7 +57,7 @@ if ($html->find('div text', 10)->plaintext == "No hay informaci&oacute;n disponi
 }
 
 // Busca coordenadas de origen y destino
-$coords = geocoder::getLocation(utf8_encode($html->find('div span text', 20)->plaintext) . ", Mexico");
+$coords = geocoder::getLocation(utf8_encode($html->find('text', 73)->plaintext) . ", Mexico");
 if($coords != false) {
 	$latitudOrigen = $coords['lat'];
 	$longitudOrigen = $coords['lng'];
@@ -65,7 +65,7 @@ if($coords != false) {
 	$latitudOrigen = "";
 	$longitudOrigen = "";
 }
-$coords = geocoder::getLocation(utf8_encode($html->find('div span text', 31)->plaintext) . ", Mexico");
+$coords = geocoder::getLocation(utf8_encode($html->find('text', 80)->plaintext) . ", Mexico");
 if($coords != false) {
 	$latitudDestino = $coords['lat'];
 	$longitudDestino = $coords['lng'];
@@ -77,26 +77,26 @@ if($coords != false) {
 // Construye respuesta de guia/rastreo encontrado
 try {
     $fields = array(
-        "numero_guia" => $html->find('div span text', 1)->plaintext,
-        "codigo_rastreo" => $html->find('div span text', 3)->plaintext,
-        "servicio" => utf8_encode($html->find('div span text', 8)->plaintext),
-        "fecha_programada" => $html->find('div span text', 15)->plaintext,
+        "numero_guia" => $html->find('text', 60)->plaintext,
+        "codigo_rastreo" => $html->find('text', 64)->plaintext,
+        "servicio" => utf8_encode($html->find('text', 135)->plaintext),
+        "fecha_programada" => $html->find('text', 155)->plaintext,
         "origen" => array(
-            "nombre" => utf8_encode($html->find('div span text', 20)->plaintext),
+            "nombre" => utf8_encode($html->find('text', 73)->plaintext),
             "latitud" => $latitudOrigen,
             "longitud" => $longitudOrigen
         ),
-        "fecha_recoleccion" => substr($html->find('div span text', 26)->plaintext, 0, 10),
-        "hora_recoleccion" => substr($html->find('div span text', 26)->plaintext, 11),
+        "fecha_recoleccion" => $html->find('text', 167)->plaintext,
+        // YA NO EXISTEEEE! "hora_recoleccion" => substr($html->find('div span text', 26)->plaintext, 11),
         "destino" => array(
-            "nombre" => utf8_encode($html->find('div span text', 31)->plaintext),
+            "nombre" => utf8_encode($html->find('text', 80)->plaintext),
             "latitud" => $latitudDestino,
             "longitud" => $longitudDestino,
-            "codigo_postal" => $html->find('div span text', 37)->plaintext
+            "codigo_postal" => $html->find('text', 84)->plaintext
         ),
-        "estatus_envio" => utf8_encode($html->find('div span text', 42)->plaintext),
-        "fecha_entrega" => substr($html->find('div span text', 48)->plaintext, 0, 10),
-        "hora_entrega" => substr($html->find('div span text', 48)->plaintext, 11)
+        "estatus_envio" => utf8_encode($html->find('text', 97)->plaintext),
+        "fecha_entrega" => utf8_encode($html->find('text', 139)->plaintext),
+        // YA NO EXISTEEEE! "hora_entrega" => substr($html->find('div span text', 48)->plaintext, 11)
     );
 	$fields = limpiaRespuesta($fields);
     echo indent(json_encode($fields));
