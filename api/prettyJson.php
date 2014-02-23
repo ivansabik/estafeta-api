@@ -56,4 +56,3 @@ function indent($json) {
 
     return $result;
 }
-?>

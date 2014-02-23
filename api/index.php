@@ -1,12 +1,38 @@
 ﻿<?php
-// TODO: Historial del envio, trazar poligono en mapa e historial
+// Config general
 error_reporting(0);
 header('Content-Type: application/json; charset=utf-8');
 
+// Includes
 include_once 'simple_html_dom.php';
 include_once 'prettyJson.php';
 include_once 'funciones.php';
 include_once 'geocoder.php';
+
+/*
+ * En buscarDom.php viene el numero de nodo text que le toca, si cambia el DOM
+ * cambia este mapeo
+ * 
+ * Número de guía (text, 60)
+ * Código de rastreo (text, 64)
+ * Origen (text, 73)
+ * Destino (text, 80)
+ * CP Destino (text, 84)
+ * Estatus del servicio (text, 97)
+ * Servicio (text, 135)
+ * Fecha y hora de entrega (text, 139)
+ * Fecha programada de entrega (text, 155)
+ * Fecha de recolección (text, 167)
+ * 
+ * Agregados en el fix de 22.02.14
+ * 
+ * Tipo de envío (text, 149)
+ * Recibió (text, 102)
+ * Firma de Recibido (img, 4)
+ * Dimensiones cm (text, 252)
+ * Peso kg (text, 261)
+ * Peso volumétrico kg (text, 267)
+ */
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, "http://rastreo3.estafeta.com/RastreoWebInternet/consultaEnvio.do");
@@ -28,8 +54,7 @@ if (!isset($_GET['numero'])) {
 if (valida('guia')) {
     $data['guias'] = $_GET['numero'];
     $data['tipoGuia'] = 'ESTAFETA';
-}
-elseif (valida('rastreo')) {
+} elseif (valida('rastreo')) {
     $data['guias'] = $_GET['numero'];
     $data['tipoGuia'] = 'REFERENCE';
 } else {
@@ -48,57 +73,75 @@ $html = new simple_html_dom();
 $html->load($output);
 
 // No hay informacion disponible
-if ($html->find('text', 248)->plaintext == "No hay informaci&oacute;n disponible.") {
+if ($html->find('text', 248)->plaintext == "No hay información disponible.") {
     $fields = array(
         "error" => 2,
-        "mensaje_error" => "No hay información disponible",
+        "mensaje_error" => "No hay información disponible.",
     );
     die(indent(json_encode($fields)));
 }
 
 // Busca coordenadas de origen y destino
-$coords = geocoder::getLocation(utf8_encode($html->find('text', 73)->plaintext) . ", Mexico");
-if($coords != false) {
-	$latitudOrigen = $coords['lat'];
-	$longitudOrigen = $coords['lng'];
+$ciudadOrigen = $html->find('text', 73)->plaintext;
+$coords = geocoder::getLocation($ciudadOrigen . ", Mexico");
+if ($coords != false) {
+    $latitudOrigen = $coords['lat'];
+    $longitudOrigen = $coords['lng'];
 } else {
-	$latitudOrigen = "";
-	$longitudOrigen = "";
+    $latitudOrigen = "";
+    $longitudOrigen = "";
 }
-$coords = geocoder::getLocation(utf8_encode($html->find('text', 80)->plaintext) . ", Mexico");
-if($coords != false) {
-	$latitudDestino = $coords['lat'];
-	$longitudDestino = $coords['lng'];
+$ciudadDestino = utf8_encode($html->find('text', 80)->plaintext);
+$coords = geocoder::getLocation($ciudadDestino . ", Mexico");
+if ($coords != false) {
+    $latitudDestino = $coords['lat'];
+    $longitudDestino = $coords['lng'];
 } else {
-	$latitudDestino = "";
-	$longitudDestino = "";
+    $latitudDestino = "";
+    $longitudDestino = "";
 }
+
+// Descomposicion de dimensiones, de string a ancho, alto, largo
+$dimensiones = $html->find('text', 252)->plaintext;
+$arrDimensiones = explode('x', $dimensiones);
+$ancho = $arrDimensiones[0];
+$alto = $arrDimensiones[1];
+$largo = $arrDimensiones[2];
 
 // Construye respuesta de guia/rastreo encontrado
 try {
     $fields = array(
-        "numero_guia" => $html->find('text', 60)->plaintext,
-        "codigo_rastreo" => $html->find('text', 64)->plaintext,
-        "servicio" => utf8_encode($html->find('text', 135)->plaintext),
-        "fecha_programada" => $html->find('text', 155)->plaintext,
+        "numero_guia" => trim($html->find('text', 60)->plaintext),
+        "codigo_rastreo" => trim($html->find('text', 64)->plaintext),
+        "servicio" => trim($html->find('text', 135)->plaintext),
+        "fecha_programada" => trim($html->find('text', 155)->plaintext),
         "origen" => array(
-            "nombre" => utf8_encode($html->find('text', 73)->plaintext),
+            "nombre" => trim($html->find('text', 73)->plaintext),
             "latitud" => $latitudOrigen,
             "longitud" => $longitudOrigen
         ),
-        "fecha_recoleccion" => $html->find('text', 167)->plaintext,
-        // YA NO EXISTEEEE! "hora_recoleccion" => substr($html->find('div span text', 26)->plaintext, 11),
+        "fecha_recoleccion" => trim($html->find('text', 167)->plaintext),
         "destino" => array(
-            "nombre" => utf8_encode($html->find('text', 80)->plaintext),
+            "nombre" => trim($html->find('text', 80)->plaintext),
             "latitud" => $latitudDestino,
             "longitud" => $longitudDestino,
-            "codigo_postal" => $html->find('text', 84)->plaintext
+            "codigo_postal" => trim(str_replace('&nbsp;', '', $html->find('text', 84)->plaintext))
         ),
-        "estatus_envio" => utf8_encode($html->find('text', 97)->plaintext),
-        "fecha_entrega" => utf8_encode($html->find('text', 139)->plaintext),
-        // YA NO EXISTEEEE! "hora_entrega" => substr($html->find('div span text', 48)->plaintext, 11)
+        "estatus_envio" => trim($html->find('text', 97)->plaintext),
+        "fecha_entrega" => trim($html->find('text', 139)->plaintext),
+        // Agregados en el fix de 22.02.14
+        "tipo_envio" => trim($html->find('text', 149)->plaintext),
+        "recibio" => trim($html->find('text', 102)->plaintext),
+        "firma_recibido" => 'http://rastreo3.estafeta.com' . $html->find('img', 4)->src,
+        "dimensiones" => array(
+            "ancho" => $ancho,
+            "alto" => $alto,
+            "largo" => $largo
+        ),
+        "peso" => trim($html->find('text', 261)->plaintext),
+        "peso_volumetrico" => trim($html->find('text', 267)->plaintext)
     );
-	$fields = limpiaRespuesta($fields);
+    $fields = limpiaRespuesta($fields);
     echo indent(json_encode($fields));
 } catch (Exception $e) {
     $fields = array(
@@ -107,4 +150,3 @@ try {
     );
     die(indent(json_encode($fields)));
 }
-?>
