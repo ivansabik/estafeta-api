@@ -20,7 +20,7 @@ curl_close($ch);
 $html = new simple_html_dom();
 $html->load($output);
 ?>
-<h1>TEXT</h1>
+<h1>Nodos text</h1>
 <?php
 $i = 0;
 $searchKey = 'text';

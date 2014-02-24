@@ -73,7 +73,7 @@ $html = new simple_html_dom();
 $html->load($output);
 
 // No hay informacion disponible
-if ($html->find('text', 248)->plaintext == "No hay información disponible.") {
+if (trim(str_replace('&nbsp;', '', $html->find('text', 248)->plaintext)) == "No hay información disponible.") {
     $fields = array(
         "error" => 2,
         "mensaje_error" => "No hay información disponible.",
@@ -82,7 +82,7 @@ if ($html->find('text', 248)->plaintext == "No hay información disponible.") {
 }
 
 // Busca coordenadas de origen y destino
-$ciudadOrigen = $html->find('text', 73)->plaintext;
+$ciudadOrigen = trim(str_replace('&nbsp;', '', $html->find('text', 73)->plaintext));
 $coords = geocoder::getLocation($ciudadOrigen . ", Mexico");
 if ($coords != false) {
     $latitudOrigen = $coords['lat'];
@@ -91,7 +91,7 @@ if ($coords != false) {
     $latitudOrigen = "";
     $longitudOrigen = "";
 }
-$ciudadDestino = utf8_encode($html->find('text', 80)->plaintext);
+$ciudadDestino = trim(str_replace('&nbsp;', '', $html->find('text', 80)->plaintext));
 $coords = geocoder::getLocation($ciudadDestino . ", Mexico");
 if ($coords != false) {
     $latitudDestino = $coords['lat'];
@@ -111,35 +111,35 @@ $largo = $arrDimensiones[2];
 // Construye respuesta de guia/rastreo encontrado
 try {
     $fields = array(
-        "numero_guia" => trim($html->find('text', 60)->plaintext),
-        "codigo_rastreo" => trim($html->find('text', 64)->plaintext),
-        "servicio" => trim($html->find('text', 135)->plaintext),
-        "fecha_programada" => trim($html->find('text', 155)->plaintext),
+        "numero_guia" => trim(str_replace('&nbsp;', '', $html->find('text', 60)->plaintext)),
+        "codigo_rastreo" => trim(str_replace('&nbsp;', '', $html->find('text', 64)->plaintext)),
+        "servicio" => trim(str_replace('&nbsp;', '', utf8_encode($html->find('text', 135)->plaintext))),
+        "fecha_programada" => trim(str_replace('&nbsp;', '', $html->find('text', 155)->plaintext)),
         "origen" => array(
             "nombre" => trim($html->find('text', 73)->plaintext),
             "latitud" => $latitudOrigen,
             "longitud" => $longitudOrigen
         ),
-        "fecha_recoleccion" => trim($html->find('text', 167)->plaintext),
+        "fecha_recoleccion" => trim(str_replace('&nbsp;', '', $html->find('text', 167)->plaintext)),
         "destino" => array(
-            "nombre" => trim($html->find('text', 80)->plaintext),
+            "nombre" => trim(str_replace('&nbsp;', '', $html->find('text', 80)->plaintext)),
             "latitud" => $latitudDestino,
             "longitud" => $longitudDestino,
             "codigo_postal" => trim(str_replace('&nbsp;', '', $html->find('text', 84)->plaintext))
         ),
-        "estatus_envio" => trim($html->find('text', 97)->plaintext),
-        "fecha_entrega" => trim($html->find('text', 139)->plaintext),
+        "estatus_envio" => trim(str_replace('&nbsp;', '', $html->find('text', 97)->plaintext)),
+        "fecha_entrega" => trim(str_replace('&nbsp;', '', $html->find('text', 139)->plaintext)),
         // Agregados en el fix de 22.02.14
-        "tipo_envio" => trim($html->find('text', 149)->plaintext),
-        "recibio" => trim($html->find('text', 102)->plaintext),
+        "tipo_envio" => trim(str_replace('&nbsp;', '', $html->find('text', 149)->plaintext)),
+        "recibio" => trim(str_replace('&nbsp;', '', $html->find('text', 102)->plaintext)),
         "firma_recibido" => 'http://rastreo3.estafeta.com' . $html->find('img', 4)->src,
         "dimensiones" => array(
             "ancho" => $ancho,
             "alto" => $alto,
             "largo" => $largo
         ),
-        "peso" => trim($html->find('text', 261)->plaintext),
-        "peso_volumetrico" => trim($html->find('text', 267)->plaintext)
+        "peso" => trim(str_replace('&nbsp;', '', $html->find('text', 261)->plaintext)),
+        "peso_volumetrico" => trim(str_replace('&nbsp;', '', $html->find('text', 267)->plaintext))
     );
     $fields = limpiaRespuesta($fields);
     echo indent(json_encode($fields));

@@ -14,7 +14,6 @@ Cambios importantes:
  - AGREGADO Dimensiones cm
  - AGREGADO Peso kg
  - AGREGADO Peso volumétrico kg
-================
 
 Sin relación alguna con Estafeta, es una API desarrollada con PHP que proporciona información relacionada con un envió en formato JSON. Para hacer esto hace una petición POST a la pagina de rastreo de Estafeta y parsea la pagina resultante para construir la información del paquete.
 
