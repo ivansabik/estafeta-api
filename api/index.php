@@ -1,11 +1,8 @@
 ﻿<?php
-// Config general
+## Config general
 error_reporting(0);
 header('Content-Type: application/json; charset=utf-8');
 
-// Includes
-include_once 'simple_html_dom.php';
-include_once 'prettyJson.php';
 include_once 'funciones.php';
 include_once 'geocoder.php';
 
@@ -49,7 +46,7 @@ if (!isset($_GET['numero'])) {
         "error" => 1,
         "mensaje_error" => "No existe el parámetro numero en la peticion GET",
     );
-    die(indent(json_encode($fields)));
+    die(json_encode($fields));
 }
 if (valida('guia')) {
     $data['guias'] = $_GET['numero'];
@@ -62,7 +59,7 @@ if (valida('guia')) {
         "error" => 2,
         "mensaje_error" => "Número de guía o código de rastreo no válidos",
     );
-    die(indent(json_encode($fields)));
+    die(json_encode($fields));
 }
 
 curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
@@ -78,7 +75,7 @@ if (trim(str_replace('&nbsp;', '', $html->find('text', 248)->plaintext)) == "No 
         "error" => 2,
         "mensaje_error" => "No hay información disponible.",
     );
-    die(indent(json_encode($fields)));
+    die(json_encode($fields));
 }
 
 // Busca coordenadas de origen y destino
@@ -142,11 +139,11 @@ try {
         "peso_volumetrico" => trim(str_replace('&nbsp;', '', $html->find('text', 267)->plaintext))
     );
     $fields = limpiaRespuesta($fields);
-    echo indent(json_encode($fields));
+    echo json_encode($fields);
 } catch (Exception $e) {
     $fields = array(
         "error" => 2,
         "mensaje_error" => $e,
     );
-    die(indent(json_encode($fields)));
+    die(json_encode($fields));
 }
