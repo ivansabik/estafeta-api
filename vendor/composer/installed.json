@@ -51,18 +51,18 @@
         "source": {
             "type": "git",
             "url": "https://github.com/ivanrodriguez/dom-hunter.git",
-            "reference": "e1e06c5c6397092ee9d3fb9596246493484ba58e"
+            "reference": "70a4b87bbe1d8385140618df2c9636581d85cf76"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/ivanrodriguez/dom-hunter/zipball/e1e06c5c6397092ee9d3fb9596246493484ba58e",
-            "reference": "e1e06c5c6397092ee9d3fb9596246493484ba58e",
+            "url": "https://api.github.com/repos/ivanrodriguez/dom-hunter/zipball/70a4b87bbe1d8385140618df2c9636581d85cf76",
+            "reference": "70a4b87bbe1d8385140618df2c9636581d85cf76",
             "shasum": ""
         },
         "require": {
             "sunra/php-simple-html-dom-parser": "1.5.0"
         },
-        "time": "2014-04-27 17:17:58",
+        "time": "2014-05-13 12:38:04",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -84,17 +84,17 @@
     },
     {
         "name": "luracast/restler",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "3.x-dev",
+        "version_normalized": "3.9999999.9999999.9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/Luracast/Restler.git",
-            "reference": "c5591c143a21390dcfbea06009fbc76a822754af"
+            "reference": "09a467f7acb1c5ad85af19646d55c2e2465c80b6"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Luracast/Restler/zipball/c5591c143a21390dcfbea06009fbc76a822754af",
-            "reference": "c5591c143a21390dcfbea06009fbc76a822754af",
+            "url": "https://api.github.com/repos/Luracast/Restler/zipball/09a467f7acb1c5ad85af19646d55c2e2465c80b6",
+            "reference": "09a467f7acb1c5ad85af19646d55c2e2465c80b6",
             "shasum": ""
         },
         "require": {
@@ -127,7 +127,7 @@
             "twig/twig": "Restler can render HtmlView using twig templates (see require-dev for details)",
             "zendframework/zendamf": "Support for the amf document format  (see require-dev for details)"
         },
-        "time": "2014-04-25 11:42:51",
+        "time": "2014-05-13 13:33:28",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -161,6 +161,60 @@
             "framework",
             "rest",
             "server"
+        ]
+    },
+    {
+        "name": "jstayton/google-maps-geocoder",
+        "version": "v2.1.0",
+        "version_normalized": "2.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/jstayton/GoogleMapsGeocoder.git",
+            "reference": "fae11552d04e8614a9e40189896a9a8ce00ae9d2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/jstayton/GoogleMapsGeocoder/zipball/fae11552d04e8614a9e40189896a9a8ce00ae9d2",
+            "reference": "fae11552d04e8614a9e40189896a9a8ce00ae9d2",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.0"
+        },
+        "require-dev": {
+            "phpdocumentor/phpdocumentor": "*"
+        },
+        "time": "2013-12-29 21:31:09",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "GoogleMapsGeocoder": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Justin Stayton",
+                "email": "justin.stayton@gmail.com",
+                "homepage": "http://justinstayton.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "A PHP wrapper for the Google Maps Geocoding API v3.",
+        "homepage": "https://github.com/jstayton/GoogleMapsGeocoder",
+        "keywords": [
+            "geocode",
+            "geocoder",
+            "geocoding",
+            "gmap",
+            "gmaps",
+            "google",
+            "map",
+            "maps"
         ]
     }
 ]

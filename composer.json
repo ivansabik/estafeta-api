@@ -1,0 +1,7 @@
+{
+    "require": {
+        "luracast/restler": "3.*@dev",
+        "ivansabik/dom-hunter": "dev-master",
+        "jstayton/google-maps-geocoder": "*"
+    }
+}

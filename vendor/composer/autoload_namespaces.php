@@ -9,4 +9,5 @@ return array(
     'Sunra\\PhpSimple\\HtmlDomParser' => array($vendorDir . '/sunra/php-simple-html-dom-parser/Src'),
     'Luracast\\Restler' => array($vendorDir . '/luracast/restler/vendor'),
     'Ivansabik\\DomHunter' => array($vendorDir . '/ivansabik/dom-hunter/src'),
+    'GoogleMapsGeocoder' => array($vendorDir . '/jstayton/google-maps-geocoder/src'),
 );

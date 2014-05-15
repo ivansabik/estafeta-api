@@ -1,6 +1,0 @@
-{
-    "require": {
-        "ivansabik/dom-hunter": "dev-master",
-	"luracast/restler": "dev-master"
-    }
-}
