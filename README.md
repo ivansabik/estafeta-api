@@ -3,7 +3,7 @@
 
 API que proporciona información de envios (rastreo y cotizacion) para Estafeta. No es oficial ni tiene relacion con la empresa del mismo nombre.
 
-Actualmente proporciona la siguiente info (sólo para envíos nacionales)
+Actualmente proporciona la siguiente info (sólo para envíos nacionales):
 
  - Número de guía
  - Código de rastreo
@@ -16,53 +16,181 @@ Actualmente proporciona la siguiente info (sólo para envíos nacionales)
  - Estatus del envío
  - Fecha de entrega
  - Hora de entrega
+ - Firma y comprobante de recibido
+ - Historial de movimientos
+
+Para cotización muestra la info de paquetes y sobres de los siguientes productos:
+
+ - 11:30
+ - Día siguiente
+ - Dos días
+ - Terrestre
 
 ### Uso
 
     rastreo?numero=GUIA_O_CODIGO_DE_RASTREO
     Ej: http://localhost/estafeta-api/index.php/estafeta/rastreo?numero=3039999999061710015581
 
+    cotizacion?cp_origen=CP&cp_destino=CP
+    Ej: http://localhost/estafeta-api/index.php/estafeta/cotizacion?cp_origen=01210&cp_destino=86035
+
+    cotizacion?cp_origen=CP&cp_destino=CP&tipo=paquete&peso=PESO_KG&alto=ALTO_CM&ancho=ANCHO_CM&largo=LARGO_CM
+    Ej: http://localhost/estafeta-api/index.php/estafeta/cotizacion?cp_origen=01210&cp_destino=86035&tipo=paquete&peso=1&alto=10&ancho=20&largo=20
+
 ### Ejemplo de error
 
     ﻿{
       "error":2,
-      "mensaje_error":"No hay informaci\u00f3n disponible"
+      "mensaje_error":"No hay información disponible"
     }
 
-### Ejemplo de respuesta exitosa
+### Ejemplo de respuesta exitosa de rastreo
 
     {
-      "numero_guia":"3208544064715720055515",
-      "codigo_rastreo":"3563581975",
-      "servicio":null,
-      "fecha_programada":"17\/02\/2014",
-      "origen":{
-        "nombre":"Tijuana",
-        "latitud":32.5149469,
-        "longitud":-117.0382471
-      },
-      "fecha_recoleccion":"07\/02\/2014 04:43 PM",
-      "destino":{
-        "nombre":"MEXICO D.F.",
-        "latitud":19.4326077,
-        "longitud":-99.133208,
-        "codigo_postal":"01210"
-      },
-      "estatus_envio":"Entregado",
-      "fecha_entrega":"12\/02\/2014 01:01 PM",
-      "tipo_envio":"PAQUETE",
-      "recibio":"SDR:JOSE BOLA?OS",
-      "firma_recibido":"http:\/\/rastreo3.estafeta.com\/RastreoWebInternet\/firmaServlet?guia=3208544064715720055515&idioma=es",
-      "dimensiones":{
-        "ancho":"47",
-        "alto":"34",
-        "largo":"15"
-      },
-      "peso":"11.8",
-      "peso_volumetrico":"4.7"
+        "numero_guia": "6659999999061710015592",
+        "codigo_rastreo": "1749215347",
+        "origen": {
+            "nombre": "Chetumal",
+            "latitud": 18.5001889,
+            "longitud": -88.296146
+        },
+        "destino": {
+            "nombre": "Cuernavaca",
+            "latitud": 18.9186111,
+            "longitud": -99.2341667,
+            "cp_destino": "62230"
+        },
+        "servicio": "Entrega garantizada al tercer día hábil",
+        "estatus": "Entregado",
+        "fecha_programada": "20/02/2014",
+        "fecha_entrega": "24/02/2014 04:41 PM",
+        "peso": "22.6",
+        "peso_volumetrico": "64.8",
+        "recibio": "SDR:JERONIMO DE LA VEGA",
+        "dimensiones": {
+            "alto": "120",
+            "largo": "52",
+            "ancho": "52"
+        },
+        "movimientos": [
+            {
+                "descripcion": "Cuernavaca En ruta local sin éxito en la entrega",
+                "fecha": "24/02/2014 10:28 AM",
+                "id": 8
+            },
+            {
+                "descripcion": "Cuernavaca En proceso de entrega CVA Cuernavaca",
+                "fecha": "24/02/2014 09:52 AM",
+                "id": 1
+            },
+            {
+                "descripcion": "Cuernavaca En proceso de entrega CVA Cuernavaca",
+                "fecha": "24/02/2014 09:24 AM",
+                "id": 1
+            },
+            {
+                "descripcion": "Cuernavaca Llegada a centro de distribución CVA Cuernavaca",
+                "fecha": "22/02/2014 07:23 AM",
+                "id": 2
+            },
+            {
+                "descripcion": "MEXICO D.F. En ruta foránea  hacia CVA-Cuernavaca",
+                "fecha": "21/02/2014 08:41 PM",
+                "id": 3
+            },
+            {
+                "descripcion": "MEXICO D.F. Movimiento en centro de distribución",
+                "fecha": "21/02/2014 05:28 PM",
+                "id": 6
+            },
+            {
+                "descripcion": "MEXICO D.F. Llegada a centro de distribución",
+                "fecha": "21/02/2014 05:24 PM",
+                "id": 2
+            },
+            {
+                "descripcion": "Centro de Int. TIN En ruta foránea  hacia CVA-Cuernavaca",
+                "fecha": "20/02/2014 11:46 PM",
+                "id": 3
+            },
+            {
+                "descripcion": "Mérida En ruta foránea  hacia CVA-Cuernavaca",
+                "fecha": "18/02/2014 06:44 AM",
+                "id": 3
+            },
+            {
+                "descripcion": "Mérida Llegada a centro de distribución MID Mérida",
+                "fecha": "18/02/2014 06:38 AM",
+                "id": 2
+            },
+            {
+                "descripcion": "Chetumal En ruta foránea  hacia CVA-Cuernavaca",
+                "fecha": "17/02/2014 06:25 PM",
+                "id": 3
+            },
+            {
+                "descripcion": "Recolección en oficina por ruta local",
+                "fecha": "17/02/2014 06:08 PM",
+                "id": 4
+            },
+            {
+                "descripcion": "Envio recibido en oficina Av Cinco de Mayo 25  Centro Chetumal",
+                "fecha": "17/02/2014 01:37 PM",
+                "id": 5
+            }
+        ],
+        "firma_recibido": "http://rastreo3.estafeta.com/RastreoWebInternet/firmaServlet?guia=6659999999061710015592&idioma=es",
+        "comprobante_entrega": "http://rastreo3.estafeta.com/RastreoWebInternet/consultaEnvio.do?dispatch=doComprobanteEntrega&guiaEst=6659999999061710015592"
     }
 
-### Respuestas
+### Ejemplo de respuesta exitosa de cotización
+
+    {
+        "precios": [
+            {
+                "producto": "11:30",
+                "peso_kg": "0.00",
+                "tarifa_guia": "192.72",
+                "tarifa_combustible": "9.44",
+                "cargos_extra": "0.00",
+                "sobrepeso_costo": "0.00",
+                "sobrepeso_combustible": "0.00",
+                "costo_total": "202.16"
+            },
+            {
+                "producto": "Dia Sig.",
+                "peso_kg": "0.00",
+                "tarifa_guia": "159.15",
+                "tarifa_combustible": "7.80",
+                "cargos_extra": "0.00",
+                "sobrepeso_costo": "0.00",
+                "sobrepeso_combustible": "0.00",
+                "costo_total": "166.95"
+            },
+            {
+                "producto": "2 Dias",
+                "peso_kg": "0.00",
+                "tarifa_guia": "129.93",
+                "tarifa_combustible": "6.37",
+                "cargos_extra": "0.00",
+                "sobrepeso_costo": "0.00",
+                "sobrepeso_combustible": "0.00",
+                "costo_total": "136.30"
+            },
+            {
+                "producto": "Terrestre",
+                "peso_kg": "0.00",
+                "tarifa_guia": "158.51",
+                "tarifa_combustible": "7.77",
+                "cargos_extra": "0.00",
+                "sobrepeso_costo": "0.00",
+                "sobrepeso_combustible": "0.00",
+                "costo_total": "166.28"
+            }
+        ]
+    }
+
+### Respuestas rastreo
 
 | Parametro         | Tipo                                     | Descripcion      |
 | ----------------  | ---------------------------------------- | ---------------- | 
@@ -73,7 +201,7 @@ Actualmente proporciona la siguiente info (sólo para envíos nacionales)
 | origen            | nombre, latitud, longitud                |                  |
 | fecha_recoleccion |                                          |                  |
 | destino           | nombre, latitud, longitud, codigo_postal |                  |
-| estatus_envio     |                                          |                  |
+| estatus           |                                          |                  |
 | fecha_entrega     |                                          |                  |
 | tipo_envio        |                                          |                  |
 | recibio           |                                          |                  |
@@ -81,3 +209,12 @@ Actualmente proporciona la siguiente info (sólo para envíos nacionales)
 | dimensiones       | ancho, alto, largo                       |                  |
 | peso              |                                          |                  |
 | peso_volumetrico  |                                          |                  |
+| movimientos       |                                          |                  |
+
+### Respuestas cotizacion
+
+
+### Todos
+
+  - Versión línea de comandos
+  - Cotización de paquetes
