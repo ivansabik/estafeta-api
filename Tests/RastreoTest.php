@@ -1,7 +1,6 @@
 <?php
 
 # TODO: Mucho codigo en los tests, refactor
-require_once 'vendor/autoload.php';
 require_once 'Estafeta.php';
 
 use Ivansabik\DomHunter\DomHunter;
