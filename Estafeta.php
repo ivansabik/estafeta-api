@@ -14,13 +14,13 @@ use Ivansabik\DomHunter\IdUnico;
 use Ivansabik\DomHunter\NodoDom;
 
 class Estafeta {
-    # Endpoint de /rastreo?numero=3039999999061710015581
+    # Endpoint de /rastreo?numero=<NUMERO DE GUIA O CODIGO DE RASTREO>
 
     public function rastreo($numero = NULL) {
         if (!$numero) {
             return array('mensaje_error' => 'Falta el parametro "numero"', 'error' => 1);
         }
-        $tipo_numero = $this->valida_numero($numero);
+        $tipo_numero = $this->_valida_numero($numero);
 
         # Params iniciales
         $params_peticion = array(
@@ -112,45 +112,12 @@ class Estafeta {
             $movimientos = array();
             foreach ($historial as $evento) {
                 $movimiento = array();
-                $movimiento['descripcion'] = $evento['lugar_movimiento'];
+                $movimiento['descripcion'] = $texto;
                 $movimiento['fecha'] = $evento['fecha'];
                 # Comentado por buggiento https://github.com/ivanrodriguez/dom-hunter/issues/4
                 # movimiento['comentarios'] = $evento['comentarios'];
-                # En proceso de entrega
-                if (preg_match('/\bEN PROCESO DE ENTREGA\b/i', $evento['lugar_movimiento'])) {
-                    $movimiento['id'] = 1;
-                }
-                # Llegada a CEDI
-                if (preg_match('/\bLLEGADA A CENTRO DE DISTRIBUCI\b/i', $evento['lugar_movimiento'])) {
-                    $movimiento['id'] = 2;
-                }
-                # En ruta foránea  hacia un destino
-                if (preg_match('/\bEN RUTA FOR\b/i', $evento['lugar_movimiento'])) {
-                    $movimiento['id'] = 3;
-                }
-                # Recolección en oficina por ruta local
-                if (preg_match('/\bN EN OFICINA\b/i', $evento['lugar_movimiento'])) {
-                    $movimiento['id'] = 4;
-                }
-                # Recibido en oficina
-                if (preg_match('/\bRECIBIDO EN OFICINA\b/i', $evento['lugar_movimiento'])) {
-                    $movimiento['id'] = 5;
-                }
-                # Movimiento en CEDI
-                if (preg_match('/\bMOVIMIENTO EN CENTRO DE DISTRIBUCI\b/i', $evento['lugar_movimiento'])) {
-                    $movimiento['id'] = 6;
-                }
-                # Aclaracion en proceso
-                if (preg_match('/\bN EN PROCESO\b/i', $evento['lugar_movimiento'])) {
-                    $movimiento['id'] = 7;
-                }
-                # En ruta local
-                if (preg_match('/\bEN RUTA LOCAL\b/i', $evento['lugar_movimiento'])) {
-                    $movimiento['id'] = 8;
-                }
-                if ($evento['lugar_movimiento']) {
-                    $movimientos[] = $movimiento;
-                }
+                $movimiento['id'] = _asigna_id_movimiento($texto);
+                $movimientos[] = $movimiento;
             }
             $hunted['movimientos'] = $movimientos;
 
@@ -160,7 +127,11 @@ class Estafeta {
             $presas[] = array('firma_recibido', new NodoDom(array('navegacion' => $opciones_navegacion), 'src'));
             $hunter->arrPresas = $presas;
             $hunted_firma = $hunter->hunt();
-            $hunted['firma_recibido'] = URL_FIRMA . $hunted_firma['firma_recibido'];
+            if (isset($hunted['firma_recibido'])) {
+                $hunted['firma_recibido'] = URL_FIRMA . $hunted_firma['firma_recibido'];
+            } else {
+                $hunted['firma_recibido'] = '';
+            }
 
             # Comprobante de entrega
             $hunted['comprobante_entrega'] = URL_COMPROBANTE . $hunted['numero_guia'];
@@ -219,7 +190,7 @@ class Estafeta {
         return $hunted;
     }
 
-    private function valida_numero($numero) {
+    private function _valida_numero($numero) {
         # Numero de guia (22 y alfanumérico)
         if (strlen($numero) == 22 && ctype_alnum($numero)) {
             return 'guia';
@@ -229,6 +200,46 @@ class Estafeta {
             return 'rastreo';
         }
         return 'invalido';
+    }
+
+    public function id_movimiento($texto) {
+        # En proceso de entrega
+        if (preg_match('/\bEN PROCESO DE ENTREGA\b/i', $texto)) {
+            return 1;
+        }
+        # Llegada a CEDI
+        if (preg_match('/\bLLEGADA A CENTRO DE DISTRIBUCI\b/i', $texto)) {
+            return 2;
+        }
+        # En ruta foránea  hacia un destino
+        if (preg_match('/\bEN RUTA FOR\b/i', $texto)) {
+            return 3;
+        }
+        # Recolección en oficina por ruta local
+        if (preg_match('/\bN EN OFICINA\b/i', $texto)) {
+            return 4;
+        }
+        # Recibido en oficina
+        if (preg_match('/\bRECIBIDO EN OFICINA\b/i', $texto)) {
+            return 5;
+        }
+        # Movimiento en CEDI
+        if (preg_match('/\bMOVIMIENTO EN CENTRO DE DISTRIBUCI\b/i', $texto)) {
+            return 6;
+        }
+        # Aclaracion en proceso
+        if (preg_match('/\bN EN PROCESO\b/i', $texto)) {
+            return 7;
+        }
+        # En ruta local
+        if (preg_match('/\bEN RUTA LOCAL\b/i', $texto)) {
+            return 8;
+        }
+        # Movimiento local
+        if (preg_match('/\bMOVIMIENTO LOCAL\b/i', $texto)) {
+            return 9;
+        }
+        return -1;
     }
 
 }

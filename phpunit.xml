@@ -1,4 +1,4 @@
-<phpunit colors="true">
+<phpunit bootstrap="./vendor/autoload.php" colors="true">
     <testsuite name="Estafeta API Test Suite">
         <directory>./Tests</directory>
     </testsuite>
