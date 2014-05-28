@@ -32,14 +32,17 @@ Para cotización muestra la info de paquetes y sobres de los siguientes producto
 
 ### Uso
 
-    rastreo?numero=GUIA_O_CODIGO_DE_RASTREO
-    Ej: http://mexicapis.org.mx/apis/estafeta/index.php/estafeta/rastreo?numero=3039999999061710015581
+rastreo?numero=GUIA_O_CODIGO_DE_RASTREO
 
-    cotizacion?cp_origen=CP&cp_destino=CP
-    Ej: http://mexicapis.org.mx/apis/estafeta/cotizacion?cp_origen=01210&cp_destino=86035
+Ej: http://mexicapis.org.mx/apis/estafeta/index.php/estafeta/rastreo?numero=3039999999061710015581
 
-    cotizacion?cp_origen=CP&cp_destino=CP&tipo=paquete&peso=PESO_KG&alto=ALTO_CM&ancho=ANCHO_CM&largo=LARGO_CM
-    Ej: http://mexicapis.org.mx/apis/estafeta/cotizacion?cp_origen=01210&cp_destino=86035&tipo=paquete&peso=1&alto=10&ancho=20&largo=20
+cotizacion?cp_origen=CP&cp_destino=CP
+
+Ej: http://mexicapis.org.mx/apis/estafeta/cotizacion?cp_origen=01210&cp_destino=86035
+
+cotizacion?cp_origen=CP&cp_destino=CP&tipo=paquete&peso=PESO_KG&alto=ALTO_CM&ancho=ANCHO_CM&largo=LARGO_CM
+
+Ej: http://mexicapis.org.mx/apis/estafeta/cotizacion?cp_origen=01210&cp_destino=86035&tipo=paquete&peso=1&alto=10&ancho=20&largo=20
 
 ### Ejemplo de error
 
