@@ -3,6 +3,8 @@ Estafeta API
 
 [![Build Status](https://travis-ci.org/mexicapis/estafeta-api.svg)](https://travis-ci.org/mexicapis/estafeta-api)
 
+Para probar: http://mexicapis.org.mx/apis/estafeta/
+
 API que proporciona información de envios (rastreo y cotizacion) para Estafeta. No es oficial ni tiene relacion con la empresa del mismo nombre.
 
 Actualmente proporciona la siguiente info (sólo para envíos nacionales):
@@ -31,13 +33,13 @@ Para cotización muestra la info de paquetes y sobres de los siguientes producto
 ### Uso
 
     rastreo?numero=GUIA_O_CODIGO_DE_RASTREO
-    Ej: http://localhost/estafeta-api/index.php/estafeta/rastreo?numero=3039999999061710015581
+    Ej: http://mexicapis.org.mx/apis/estafeta/index.php/estafeta/rastreo?numero=3039999999061710015581
 
     cotizacion?cp_origen=CP&cp_destino=CP
-    Ej: http://localhost/estafeta-api/index.php/estafeta/cotizacion?cp_origen=01210&cp_destino=86035
+    Ej: http://mexicapis.org.mx/apis/estafeta/cotizacion?cp_origen=01210&cp_destino=86035
 
     cotizacion?cp_origen=CP&cp_destino=CP&tipo=paquete&peso=PESO_KG&alto=ALTO_CM&ancho=ANCHO_CM&largo=LARGO_CM
-    Ej: http://localhost/estafeta-api/index.php/estafeta/cotizacion?cp_origen=01210&cp_destino=86035&tipo=paquete&peso=1&alto=10&ancho=20&largo=20
+    Ej: http://mexicapis.org.mx/apis/estafeta/cotizacion?cp_origen=01210&cp_destino=86035&tipo=paquete&peso=1&alto=10&ancho=20&largo=20
 
 ### Ejemplo de error
 
@@ -148,7 +150,7 @@ Para cotización muestra la info de paquetes y sobres de los siguientes producto
 ### Ejemplo de respuesta exitosa de cotización
 
     {
-        "precios": [
+        "costos": [
             {
                 "producto": "11:30",
                 "peso_kg": "0.00",
@@ -215,8 +217,11 @@ Para cotización muestra la info de paquetes y sobres de los siguientes producto
 
 ### Respuestas cotizacion
 
+| Parametro         | Tipo                                     | Descripcion      |
+| ----------------  | ---------------------------------------- | ---------------- | 
+| costos            |                                          |                  |
 
 ### Todos
 
   - Versión línea de comandos
-  - Cotización de paquetes
+  - Buscar zonas
