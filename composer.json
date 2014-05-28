@@ -7,7 +7,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/ivanrodriguez/dom-hunter"
+            "url": "https://github.com/ivansabik/dom-hunter"
         }
     ]
 }
