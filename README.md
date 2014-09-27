@@ -3,8 +3,6 @@ Estafeta API
 
 [![Build Status](https://travis-ci.org/mexicapis/estafeta-api.svg)](https://travis-ci.org/mexicapis/estafeta-api)
 
-Para probar: http://mexicapis.org.mx/apis/estafeta/
-
 API que proporciona información de envios (rastreo y cotizacion) para Estafeta. No es oficial ni tiene relacion con la empresa del mismo nombre.
 
 Actualmente proporciona la siguiente info (sólo para envíos nacionales):
@@ -29,20 +27,28 @@ Para cotización muestra la info de paquetes y sobres de los siguientes producto
  - Día siguiente
  - Dos días
  - Terrestre
+ 
+### Deploy local
+
+```$ git clone https://github.com/mexicapis/estafeta-api```
+
+```$ cd estafeta-api```
+
+Las dependencias se descargan con Composer (Restler, Dom Hunter y  Google Maps Geocoder)
+
+```$ composer install```
+
+Si tienes PHP >= 5.4 con el built-in server:
+
+```$ php -S localhost:8000```
 
 ### Uso
 
-rastreo?numero=GUIA_O_CODIGO_DE_RASTREO
-
-Ej: http://mexicapis.org.mx/apis/estafeta/index.php/estafeta/rastreo?numero=3039999999061710015581
-
-cotizacion?cp_origen=CP&cp_destino=CP
-
-Ej: http://mexicapis.org.mx/apis/estafeta/cotizacion?cp_origen=01210&cp_destino=86035
-
-cotizacion?cp_origen=CP&cp_destino=CP&tipo=paquete&peso=PESO_KG&alto=ALTO_CM&ancho=ANCHO_CM&largo=LARGO_CM
-
-Ej: http://mexicapis.org.mx/apis/estafeta/cotizacion?cp_origen=01210&cp_destino=86035&tipo=paquete&peso=1&alto=10&ancho=20&largo=20
+| Endpoint           | Ejemplo                                                                                                         |
+| ------------------ | --------------------------------------------------------------------------------------------------------------- | 
+| rastreo            | http://localhost:8000/index.php/estafeta/rastreo?numero=3039999999061710015581                                  |
+| cotizacion sobre   | http://localhost:8000/cotizacion?cp_origen=01210&cp_destino=86035                                               |
+| cotizacion paquete | http://localhost:8000/cotizacion?cp_origen=01210&cp_destino=86035&tipo=paquete&peso=1&alto=10&ancho=20&largo=20 | 
 
 ### Ejemplo de error
 

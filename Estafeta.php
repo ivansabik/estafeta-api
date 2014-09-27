@@ -116,7 +116,7 @@ class Estafeta {
                 $movimiento['fecha'] = $evento['fecha'];
                 # Comentado por buggiento https://github.com/ivanrodriguez/dom-hunter/issues/4
                 # movimiento['comentarios'] = $evento['comentarios'];
-                $movimiento['id'] = _asigna_id_movimiento($texto);
+                $movimiento['id'] = self::id_movimiento($texto);
                 $movimientos[] = $movimiento;
             }
             $hunted['movimientos'] = $movimientos;
