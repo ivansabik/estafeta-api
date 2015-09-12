@@ -43,7 +43,7 @@ class Estafeta {
         $presas[] = array('numero_guia', new KeyValue('mero de gu'));
         $presas[] = array('codigo_rastreo', new KeyValue('digo de rastreo'));
         $presas[] = array('origen', new KeyValue('origen'));
-        $presas[] = array('destino', new KeyValue('destino', TRUE, TRUE));
+        $presas[] = array('destino', new KeyValue('destino'));
         $presas[] = array('cp_destino', new IdUnico(5, 'num'));
         $presas[] = array('servicio', new KeyValue('entrega garantizada', FALSE));
         $presas[] = array('estatus', new NodoDom(array('find' => '.respuestasazul'), 'plaintext', 1));
@@ -112,11 +112,11 @@ class Estafeta {
             $movimientos = array();
             foreach ($historial as $evento) {
                 $movimiento = array();
-                $movimiento['descripcion'] = $texto;
+                $movimiento['descripcion'] = $evento['lugar_movimiento'];
                 $movimiento['fecha'] = $evento['fecha'];
-                # Comentado por buggiento https://github.com/ivanrodriguez/dom-hunter/issues/4
+                # Comentado por buggiento https://github.com/ivansabik/dom-hunter/issues/4
                 # movimiento['comentarios'] = $evento['comentarios'];
-                $movimiento['id'] = self::id_movimiento($texto);
+                $movimiento['id'] = self::id_movimiento($movimiento['descripcion']);
                 $movimientos[] = $movimiento;
             }
             $hunted['movimientos'] = $movimientos;
@@ -204,39 +204,39 @@ class Estafeta {
 
     public function id_movimiento($texto) {
         # En proceso de entrega
-        if (preg_match('/\bEN PROCESO DE ENTREGA\b/i', $texto)) {
+        if (preg_match('/EN PROCESO DE ENTREGA/i', $texto)) {
             return 1;
         }
         # Llegada a CEDI
-        if (preg_match('/\bLLEGADA A CENTRO DE DISTRIBUCI\b/i', $texto)) {
+        if (preg_match('/LLEGADA A CENTRO DE DISTRIBUCI/i', $texto)) {
             return 2;
         }
         # En ruta foránea  hacia un destino
-        if (preg_match('/\bEN RUTA FOR\b/i', $texto)) {
+        if (preg_match('/EN RUTA FOR/i', $texto)) {
             return 3;
         }
         # Recolección en oficina por ruta local
-        if (preg_match('/\bN EN OFICINA\b/i', $texto)) {
+        if (preg_match('/N EN OFICINA/i', $texto)) {
             return 4;
         }
         # Recibido en oficina
-        if (preg_match('/\bRECIBIDO EN OFICINA\b/i', $texto)) {
+        if (preg_match('/RECIBIDO EN OFICINA/i', $texto)) {
             return 5;
         }
         # Movimiento en CEDI
-        if (preg_match('/\bMOVIMIENTO EN CENTRO DE DISTRIBUCI\b/i', $texto)) {
+        if (preg_match('/MOVIMIENTO EN CENTRO DE DISTRIBUCI/i', $texto)) {
             return 6;
         }
         # Aclaracion en proceso
-        if (preg_match('/\bN EN PROCESO\b/i', $texto)) {
+        if (preg_match('/N EN PROCESO/i', $texto)) {
             return 7;
         }
         # En ruta local
-        if (preg_match('/\bEN RUTA LOCAL\b/i', $texto)) {
+        if (preg_match('/EN RUTA LOCAL/i', $texto)) {
             return 8;
         }
         # Movimiento local
-        if (preg_match('/\bMOVIMIENTO LOCAL\b/i', $texto)) {
+        if (preg_match('/MOVIMIENTO LOCAL/i', $texto)) {
             return 9;
         }
         return -1;
