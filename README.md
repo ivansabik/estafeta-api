@@ -176,43 +176,43 @@ Si tienes PHP >= 5.4 con el built-in server:
     "costos": [
         {
             "producto": "11:30",
-            "peso_kg": "1.00",
-            "tarifa_guia": "200.58",
-            "tarifa_combustible": "10.63",
-            "cargos_extra": "0.00",
-            "sobrepeso_costo": "0.00",
-            "sobrepeso_combustible": "0.00",
-            "costo_total": "211.21"
+            "peso_kg": 1,
+            "tarifa_guia": 200.58,
+            "tarifa_combustible": 10.63,
+            "cargos_extra": 0,
+            "sobrepeso_costo": 0,
+            "sobrepeso_combustible": 0,
+            "costo_total": 211.21
         },
         {
             "producto": "Dia Sig.",
-            "peso_kg": "1.00",
-            "tarifa_guia": "166.19",
-            "tarifa_combustible": "8.81",
-            "cargos_extra": "0.00",
-            "sobrepeso_costo": "0.00",
-            "sobrepeso_combustible": "0.00",
-            "costo_total": "175.00"
+            "peso_kg": 1,
+            "tarifa_guia": 166.19,
+            "tarifa_combustible": 8.81,
+            "cargos_extra": 0,
+            "sobrepeso_costo": 0,
+            "sobrepeso_combustible": 0,
+            "costo_total": 175
         },
         {
             "producto": "2 Dias",
-            "peso_kg": "1.00",
-            "tarifa_guia": "140.78",
-            "tarifa_combustible": "10.94",
-            "cargos_extra": "0.00",
-            "sobrepeso_costo": "0.00",
-            "sobrepeso_combustible": "0.00",
-            "costo_total": "151.72"
+            "peso_kg": 1,
+            "tarifa_guia": 140.78,
+            "tarifa_combustible": 10.94,
+            "cargos_extra": 0,
+            "sobrepeso_costo": 0,
+            "sobrepeso_combustible": 0,
+            "costo_total": 151.72
         },
         {
             "producto": "Terrestre",
-            "peso_kg": "1.00",
-            "tarifa_guia": "163.18",
-            "tarifa_combustible": "12.68",
-            "cargos_extra": "0.00",
-            "sobrepeso_costo": "0.00",
-            "sobrepeso_combustible": "0.00",
-            "costo_total": "175.86"
+            "peso_kg": 1,
+            "tarifa_guia": 163.18,
+            "tarifa_combustible": 12.68,
+            "cargos_extra": 0,
+            "sobrepeso_costo": 0,
+            "sobrepeso_combustible": 0,
+            "costo_total": 175.86
         }
     ]
 }

@@ -184,7 +184,7 @@ class Estafeta {
         $hunter->arrParamsPeticion = $params_peticion;
         $presas = array();
         $columnas = array('producto', 'peso_kg', 'tarifa_guia', 'tarifa_combustible', 'cargos_extra', 'sobrepeso_costo', 'sobrepeso_combustible', 'costo_total');
-        $presas[] = array('costos', new Tabla(array('ocurrencia' => -1), $columnas, 10));
+        $presas[] = array('costos', new Tabla(array('ocurrencia' => -1), $columnas, 10, true));
         $hunter->arrPresas = $presas;
         $hunted = $hunter->hunt();
         return $hunted;
