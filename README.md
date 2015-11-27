@@ -1,7 +1,7 @@
 Estafeta API
 ================
 
-[![Build Status](https://travis-ci.org/mexicapis/estafeta-api.svg)](https://travis-ci.org/mexicapis/estafeta-api)
+[![Build Status](https://travis-ci.org/mandroslabs/estafeta-api.svg)](https://travis-ci.org/mandroslabs/estafeta-api)
 
 API que proporciona información de envios (rastreo y cotizacion) para Estafeta. No es oficial ni tiene relacion con la empresa del mismo nombre.
 
