@@ -46,7 +46,7 @@ class Estafeta {
         $presas[] = array('destino', new KeyValue('destino'));
         $presas[] = array('cp_destino', new IdUnico(5, 'num'));
         $presas[] = array('servicio', new KeyValue('entrega garantizada', FALSE));
-        $presas[] = array('estatus', new NodoDom(array('find' => '.respuestasazul'), 'plaintext', 1));
+        $presas[] = array('estatus', new KeyValue('status del servicio'));
         $presas[] = array('fecha_recoleccion', new KeyValue('fecha de recoleccion'));
         $presas[] = array('fecha_programada', new KeyValue('de entrega', TRUE, TRUE));
         $presas[] = array('fecha_entrega', new KeyValue('Fecha y hora de entrega'));
