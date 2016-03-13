@@ -1,7 +1,7 @@
 Estafeta API
 ================
 
-[![Build Status](https://travis-ci.org/mandroslabs/estafeta-api.svg)](https://travis-ci.org/mandroslabs/estafeta-api)
+[![Build Status](https://travis-ci.org/ivansabik/estafeta-api.svg)](https://travis-ci.org/ivansabik/estafeta-api)
 
 API que proporciona información de envios (rastreo y cotizacion) para Estafeta. No es oficial ni tiene relacion con la empresa del mismo nombre.
 
@@ -65,8 +65,13 @@ Si tienes PHP >= 5.4 con el built-in server:
 
 ### Ejemplo de respuesta exitosa de rastreo
 
-- Por numero de guia: http://localhost:8000/index.php/estafeta/rastreo?numero=3039999999061710015581
-- Por codigo de rastreo: http://localhost:8000/index.php/estafeta/rastreo?numero=1749215347
+#### Búsqueda por númerero de guía
+
+http://localhost:8000/index.php/estafeta/rastreo?numero=3039999999061710015581
+
+#### Búsqueda por código de rastreo
+
+http://localhost:8000/index.php/estafeta/rastreo?numero=1749215347
 
 ```javascript
 {
@@ -169,7 +174,9 @@ Si tienes PHP >= 5.4 con el built-in server:
 
 ### Ejemplo de respuesta exitosa de cotización
 
-- Paquete: http://localhost:8000/index.php/estafeta/cotizacion?cp_origen=01210&cp_destino=86035&tipo=paquete&peso=1&alto=10&ancho=20&largo=20
+#### Paquete
+
+http://localhost:8000/index.php/estafeta/cotizacion?cp_origen=01210&cp_destino=86035&tipo=paquete&peso=1&alto=10&ancho=20&largo=20
 
 ```javascript
 {
@@ -249,3 +256,7 @@ Si tienes PHP >= 5.4 con el built-in server:
 
   - Versión línea de comandos
   - Buscar zonas
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ivansabik/estafeta-api/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
