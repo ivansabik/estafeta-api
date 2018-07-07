@@ -2,7 +2,7 @@ Estafeta API
 ================
 [![Build Status](https://travis-ci.org/ivansabik/estafeta-api.svg)](https://travis-ci.org/ivansabik/estafeta-api)
 
-> Este repo ya no recibe mantenimiento ni se están desarrollando nuevas funcionalidades. Ya ni siquiera uso PHP personal o profresionalmente. Si estás interesado en darle mantenimiento y eventualmente ser el dueño/administrador por favor crea un nuevo Issue.
+> Este repo ya no recibe mantenimiento ni se están desarrollando nuevas funcionalidades. Ya ni siquiera uso PHP personal o profesionalmente. Si estás interesado en darle mantenimiento y eventualmente ser el dueño/administrador por favor crea un nuevo Issue.
 
 API que proporciona información de envios (rastreo y cotizacion) para Estafeta. No es oficial ni tiene relacion con la empresa del mismo nombre.
 
